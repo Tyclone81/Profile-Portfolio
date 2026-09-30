@@ -15,7 +15,7 @@ func ServeHome() http.HandlerFunc {
 
 		portfolioData := data.GetAccountRegistry()
 
-		tmpl, err := template.ParseFiles("./ui/templates/layout.html")
+		tmpl, err := template.ParseFiles("ui/templates/layout.html")
 		if err != nil {
 			http.Error(w, "Internal Template Error: "+err.Error(), http.StatusInternalServerError)
 			return
