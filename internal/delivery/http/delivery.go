@@ -2,6 +2,7 @@ package http
 
 import (
 	"html/template"
+	"log"
 	"net/http"
 	"profile-portfolio/internal/data"
 )
@@ -22,6 +23,9 @@ func ServeHome() http.HandlerFunc {
 		}
 
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		_ = tmpl.Execute(w, portfolioData)
+		if err := tmpl.Execute(w, portfolioData); err != nil {
+			log.Printf("[TEMPLATE] Render failed: %v", err)
+			http.Error(w, "Internal Template Error", http.StatusInternalServerError)
+		}
 	}
 }

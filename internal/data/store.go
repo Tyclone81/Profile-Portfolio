@@ -10,7 +10,7 @@ func GetAccountRegistry() models.SystemData {
 		PhotoPath:  "/static/images/profile.jpg",
 		ResumePath: "/static/docs/resume.pdf",
 		Socials: []models.SocialLink{
-			{Platform: "LinkedIn", URL: "www.linkedin.com/in/victor-ogero-8594611a4"},
+			{Platform: "LinkedIn", URL: "https://www.linkedin.com/in/victor-ogero-8594611a4"},
 			{Platform: "GitHub", URL: "https://github.com/Tyclone81"},
 			{Platform: "Devto", URL: "https://dev.to/tyclone81"},
 			{Platform: "X", URL: "https://x.com/tylervic2"},

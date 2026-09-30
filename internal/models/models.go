@@ -21,24 +21,24 @@ type Article struct {
 }
 
 type Experience struct {
-	Role        string
-	Company     string
-	Timeline    string
+	Role         string
+	Company      string
+	Timeline     string
 	BulletPoints []string
 }
 
 type SystemData struct {
-	Name            string
-	Title           string
-	Bio             string
-	PhotoPath       string
-	ResumePath      string
-	Socials         []SocialLink
-	Skills          []string
-	ChemSkills      []string
-	CheMania        []string
-	Hobbies         []string
-	WorkHistory     []Experience
-	Projects        []Project
-	Articles        []Article
+	Name        string
+	Title       string
+	Bio         string
+	PhotoPath   string
+	ResumePath  string
+	Socials     []SocialLink
+	Skills      []string
+	ChemSkills  []string
+	CheMania    []string
+	Hobbies     []string
+	WorkHistory []Experience
+	Projects    []Project
+	Articles    []Article
 }
