@@ -1,0 +1,182 @@
+:root {
+    --bg-canvas: #050505;
+    --bg-surface: #0c0c0e;
+    --text-pure: #ffffff;
+    --text-muted: #7a7a85;
+    --border-subtle: #16161a;
+    
+    /* 🟢 SIGNATURE HIGH-NEON RADAR VALUES */
+    --glow-neon: #00cc44;
+    --glow-neon-bright: #00ff55;
+    --glow-shadow: rgba(0, 204, 68, 0.35);
+    --glow-shadow-intense: rgba(0, 255, 85, 0.65);
+}
+
+/* 🏎️ THE CRITICAL SLOW-MO VOLUNTARY MOVEMENT CONTROLLER */
+html {
+    scroll-behavior: smooth; /* Activates the voluntary slow-mo movement scroll natively! */
+    scroll-padding-top: 80px; /* Prevents sticky navbar header from clipping section titles */
+}
+
+body {
+    background-color: var(--bg-canvas);
+    color: var(--text-pure);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0; padding: 0;
+    overflow-x: hidden;
+}
+
+/* 🧭 STICKY NAV SYSTEM HEADER PANEL */
+/* Update your existing .app-header rule to include a clean fallback transition */
+.app-header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background-color: transparent; /* Starts fully transparent at top */
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1000;
+}
+
+/* 🟢 CLASS INJECTED BY JAVASCRIPT ONCE USER SCROLLS DOWN */
+.app-header.scrolled {
+    background-color: rgba(5, 5, 5, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); /* Webkit layout engine compatibility guard */
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.2rem 0; /* Subtly thins out the header spacing on scroll for a sleek look */
+}
+
+/* Clean transition baseline for nav-links style morphing */
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-left: 2.5rem;
+    transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+/* Make the active navigation tab throw a soft neon glow reflection text shadow */
+.nav-links a.active {
+    color: var(--text-pure);
+    text-shadow: 0 0 8px var(--glow-shadow);
+    font-weight: 600;
+}
+
+/* 🏗️ FULL FULL PAGE SECTION SEGMENTS VIEWPORTS */
+.viewport-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 2rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.alternate-bg {
+    background-color: var(--bg-surface);
+}
+
+.section-wrapper {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.section-heading {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 3.5rem;
+    letter-spacing: -0.04em;
+}
+
+.neon-dot {
+    color: var(--glow-neon);
+}
+
+/* 🚀 HERO SEGMENT CANVAS GRID */
+.hero-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    gap: 4rem;
+}
+
+.hero-text-block { flex: 1; }
+.hero-title { font-size: 4rem; font-weight: 800; margin: 0 0 1.5rem 0; letter-spacing: -0.04em; }
+.hero-subtitle { color: var(--text-muted); font-size: 1.2rem; line-height: 1.6; margin-bottom: 3rem; }
+
+/* 🟢 THE NEON GLOW CTAS */
+.glow-cta-btn {
+    display: inline-block;
+    background-color: var(--glow-neon);
+    color: var(--bg-canvas);
+    text-decoration: none;
+    padding: 1.1rem 2.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 0 25px var(--glow-shadow);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow-cta-btn:hover {
+    background-color: var(--glow-neon-bright);
+    box-shadow: 0 0 40px var(--glow-shadow-intense);
+    transform: translateY(-3px);
+}
+
+/* 📸 ASYMMETRICAL PORTRAIT CONTAINER */
+.circular-frame {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #121215;
+    border: 1px solid var(--border-subtle);
+}
+
+.circular-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+/* 📁 DATA MATRICES PROJECT CARDS */
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+}
+
+.project-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 2.5rem;
+    transition: all 0.2s ease;
+}
+
+.alternate-bg .project-card { background-color: var(--bg-canvas); }
+
+.project-card:hover {
+    border-color: var(--glow-neon);
+    transform: translateY(-2px);
+}
+
+.type-badge { color: var(--glow-neon); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.project-card h3 { font-size: 1.6rem; margin: 0.5rem 0 1rem 0; }
+.project-card h3 a { color: var(--text-pure); text-decoration: none; }
+.project-card p { color: var(--text-muted); line-height: 1.6; }
+
+.tech-tag {
+    display: inline-block;
+    background-color: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-subtle);
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-right: 0.5rem;
+}
+

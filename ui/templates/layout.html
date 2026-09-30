@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Name}} | Systems Architect</title>
+    <style>
+        :root {
+            --bg-canvas: #040406; --bg-surface: #0b0b0e; --border-line: #14141a;
+            --text-pure: #ffffff; --text-muted: #747480;
+            --glow-neon: #00cc44; --glow-neon-bright: #00ff55;
+            --glow-shadow: rgba(0, 204, 68, 0.3);
+        }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        body { background-color: var(--bg-canvas); color: var(--text-pure); font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        
+        .app-header { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(4,4,6,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-line); z-index: 1000; }
+        .navbar { max-width: 1200px; margin: 0 auto; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo-text { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.03em; }
+        .nav-links { display: flex; justify-content: flex-end; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; margin-left: 2.5rem; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-pure); text-shadow: 0 0 8px var(--glow-shadow); }
+        
+        .viewport-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 6rem 2rem; box-sizing: border-box; border-bottom: 1px solid var(--border-line); }
+        .alternate-bg { background-color: var(--bg-surface); }
+        .section-wrapper { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .section-heading { font-size: 2.5rem; font-weight: 800; margin-bottom: 3.5rem; letter-spacing: -0.04em; }
+        .neon-dot { color: var(--glow-neon); }
+
+        .hero-container { display: flex; justify-content: space-between; align-items: center; gap: 4rem; }
+        .hero-text-block { flex: 1; }
+        .hero-title { font-size: 4rem; font-weight: 800; margin: 0; letter-spacing: -0.04em; }
+        .hero-subtitle { color: var(--text-muted); font-size: 1.2rem; line-height: 1.6; margin: 1.5rem 0 2rem 0; }
+        .social-strip { margin-bottom: 3rem; display: flex; gap: 1.5rem; }
+        .social-link-item { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; border: 1px solid var(--border-line); padding: 0.4rem 0.8rem; border-radius: 6px; }
+        .social-link-item:hover { color: var(--glow-neon); border-color: var(--glow-neon); text-shadow: 0 0 8px var(--glow-shadow); }
+        
+        .glow-cta-btn { display: inline-block; background-color: var(--glow-neon); color: var(--bg-canvas); text-decoration: none; padding: 1.1rem 2.5rem; border-radius: 8px; font-weight: 700; box-shadow: 0 0 25px var(--glow-shadow); transition: all 0.25s ease; }
+        .glow-cta-btn:hover { background-color: var(--glow-neon-bright); box-shadow: 0 0 35px var(--glow-neon-bright); transform: translateY(-2px); }
+        .circular-frame { width: 360px; height: 360px; border-radius: 50%; overflow: hidden; border: 1px solid var(--border-line); }
+        .circular-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .matrix-layout { display: flex; gap: 3.5rem; }
+        .tech-architect-block { flex: 0 0 62%; }
+        .analytical-chem-block { flex: 0 0 38%; background-color: var(--bg-surface); border: 1px solid var(--border-line); padding: 2.5rem; border-radius: 14px; box-sizing: border-box; }
+        
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
+        .project-card { background-color: var(--bg-surface); border: 1px solid var(--border-line); border-radius: 14px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+        .project-card:hover { border-color: var(--glow-neon); }
+        .type-badge { color: var(--glow-neon); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .tech-tag { display: inline-block; background-color: rgba(255,255,255,0.02); border: 1px solid var(--border-line); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; color: var(--text-muted); margin: 0.5rem 0.4rem 0 0; }
+        
+        .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem; }
+        .contact-channel-card { background-color: var(--bg-canvas); border: 1px solid var(--border-line); padding: 2.5rem; border-radius: 12px; text-align: center; }
+        .contact-channel-card:hover { border-color: var(--glow-neon); }
+        
+        ul { padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
+        li { margin-bottom: 0.5rem; }
+        a { color: var(--glow-neon); text-decoration: none; }
+        .brand-grid { display: flex; gap: 1.5rem; margin-top: 4rem; }
+        .brand-box { background-color: var(--bg-surface); border: 1px solid var(--border-line); padding: 1rem; border-radius: 6px; color: var(--text-muted); font-weight: bold; }
+
+        .app-header.scrolled {
+            background-color: rgba(4, 4, 6, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        @media (max-width: 900px) {
+            .hero-container { flex-direction: column-reverse; text-align: center; }
+            .matrix-layout { flex-direction: column; }
+            .tech-architect-block, .analytical-chem-block { flex: 1 1 100%; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .card-grid { grid-template-columns: 1fr; }
+            .brand-grid { flex-wrap: wrap; justify-content: center; }
+            .social-strip { justify-content: center; }
+            .hero-title { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <nav class="navbar">
+            <span class="logo-text"> {{.Name}}.blueprint</span>
+            <div class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Let's Talk</a>
+                <a href="{{.ResumePath}}" download style="color: var(--glow-neon);">Resume</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="viewport-section">
+        <div class="section-wrapper hero-container">
+            <div class="hero-text-block">
+                <h1 class="hero-title">{{.Name}}</h1>
+                <p class="hero-subtitle">{{.Bio}}</p>
+                <div class="social-strip">
+                    {{range .Socials}}
+                        <a href="{{.URL}}" target="_blank" rel="noopener noreferrer" class="social-link-item">🔗 {{.Platform}}</a>
+                    {{end}}
+                </div>
+                <a href="#contact" class="glow-cta-btn">Initiate Connection Loop</a>
+            </div>
+            <div class="circular-frame">
+                <img src="{{.PhotoPath}}" alt="Portrait">
+            </div>
+        </div>
+        <div class="section-wrapper brand-grid">
+            {{range .Hobbies}}<div class="brand-box"><span>{{.}}</span></div>{{end}}
+        </div>
+    </section>
+
+    <section id="about" class="viewport-section alternate-bg">
+        <div class="section-wrapper">
+            <h2 class="section-heading"><span class="neon-dot">//</span> Professional Matrix Profile</h2>
+            <div class="matrix-layout">
+                
+                <div class="tech-architect-block">
+                    <h3 style="margin-top: 0;">Software Engineering Core</h3>
+                    <p style="color: var(--text-muted);">Operating deep within Go networks inside the peer-to-peer 01-edu engineering matrix at Zone01 Kisumu. Focused on unpacking underlying low-level system designs, pointer security, memory boundaries, and CGO compilation loops.</p>
+                    
+                    {{range .WorkHistory}}{{if eq .Company "Zone01 Kisumu"}}
+                    <div style="border-left: 2px solid var(--border-line); padding-left: 1.5rem; margin-top: 2rem;">
+                        <span style="color: var(--glow-neon); font-size: 0.8rem; font-weight: bold;">{{.Timeline}}</span>
+                        <h4 style="margin: 0.5rem 0;">{{.Role}} • <span style="color: var(--text-muted);">{{.Company}}</span></h4>
+                        <ul>{{range .BulletPoints}}<li>{{.}}</li>{{end}}</ul>
+                    </div>
+                    {{end}}{{end}}
+
+                    <h4 style="margin-top: 2.5rem; margin-bottom: 0.5rem;">Digital Capabilities Stack</h4>
+                    {{range .Skills}}<span class="tech-tag" style="color: #fff;">{{.}}</span>{{end}}
+                </div>
+
+                <div class="analytical-chem-block">
+                    <h3 style="margin-top: 0; color: var(--glow-neon);">Analytical Chemistry & QA</h3>
+                    <p style="font-size: 0.9rem;">Process-driven BSc holder specialized in Quality Management Systems (QMS), raw input verification, and mapping rigid regulatory compliance controls (KEBS/SOPs) straight into systems automation blueprints.</p>
+                    
+                    {{range .WorkHistory}}{{if ne .Company "Zone01 Kisumu"}}
+                    <div style="margin-top: 1.5rem; border-bottom: 1px solid var(--border-line); padding-bottom: 1rem;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">{{.Timeline}}</span>
+                        <h4 style="margin: 0.25rem 0; font-size: 0.95rem;">{{.Role}}</h4>
+                        <span style="font-size: 0.85rem; color: #fff;">{{.Company}}</span>
+                    </div>
+                    {{end}}{{end}}
+
+                    <h4 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 0.9rem;">Operations Skills</h4>
+                    {{range .ChemSkills}}<span class="tech-tag" style="font-size: 0.75rem;">{{.}}</span>{{end}}
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="viewport-section">
+        <div class="section-wrapper">
+            <h2 class="section-heading"><span class="neon-dot">//</span> Recent Blueprints</h2>
+            <div class="card-grid">
+                {{range .Projects}}
+                <div class="project-card">
+                    <div>
+                        <span class="type-badge">{{.Type}}</span>
+                        <h3 style="margin: 0.8rem 0 1rem 0; font-size: 1.5rem;">{{.Title}}</h3>
+                        <p style="color: var(--text-muted); line-height: 1.6;">{{.Description}}</p>
+                        <div style="margin: 1.5rem 0;">
+                            {{range .Technologies}}<span class="tech-tag">{{.}}</span>{{end}}
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <a href="{{.SourceURL}}" target="_blank" rel="noopener noreferrer" style="color: var(--glow-neon); text-decoration: none; font-weight: 600; font-size: 0.95rem;">Explore Asset &rarr;</a>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+
+            <div style="margin-top: 5rem;">
+                <h3 class="section-heading" style="font-size: 2rem; margin-bottom: 2.5rem;"><span class="neon-dot">//</span> Technical Writings</h3>
+                <div class="card-grid">
+                    {{range .Articles}}
+                    <div class="project-card">
+                        <div>
+                            <span class="type-badge">{{.Platform}}</span>
+                            <h3 style="margin: 0.8rem 0 1rem 0; font-size: 1.4rem;">{{.Title}}</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Published live on the web &bull; {{.Date}}</p>
+                        </div>
+                        <div>
+                            <a href="{{.URL}}" target="_blank" rel="noopener noreferrer" style="color: var(--glow-neon); text-decoration: none; font-weight: 600; font-size: 0.95rem;">Read Full Publication &rarr;</a>
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="viewport-section alternate-bg">
+        <div class="section-wrapper">
+            <h2 class="section-heading"><span class="neon-dot">//</span> Connect Matrix Terminal</h2>
+            <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 750px; margin-bottom: 3.5rem;">
+                Have an architecture project, an open-source collaboration, or an operational blueprint that demands rigorous quality assurance? Let's talk.
+            </p>
+            <div class="contact-grid">
+                <div class="contact-channel-card">
+                    <span class="type-badge" style="letter-spacing: 0.05em;">Direct Email</span>
+                    <h3 style="margin: 0.8rem 0 1rem 0; font-size: 1.25rem;">Email Channel</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5;">Direct inbox for technical inquiries and architectural collaborations.</p>
+                    <a href="mailto:ogerovictor81@gmail.com" style="color: var(--glow-neon); font-weight: 600; text-decoration: none;">ogerovictor81@gmail.com</a>
+                </div>
+                <div class="contact-channel-card">
+                    <span class="type-badge" style="letter-spacing: 0.05em;">WhatsApp</span>
+                    <h3 style="margin: 0.8rem 0 1rem 0; font-size: 1.25rem;">Chat Channel</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5;">Direct real-time messaging for quick project syncs and queries.</p>
+                    <a href="https://wa.me/254101665969" target="_blank" rel="noopener noreferrer" style="color: var(--glow-neon); font-weight: 600; text-decoration: none;">+254 101665969</a>
+                </div>
+                <div class="contact-channel-card">
+                    <span class="type-badge" style="letter-spacing: 0.05em;">Mobile Line</span>
+                    <h3 style="margin: 0.8rem 0 1rem 0; font-size: 1.25rem;">Voice Channel</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5;">Cellular network connectivity for direct voice calls.</p>
+                    <a href="tel:+254101665969" style="color: var(--glow-neon); font-weight: 600; text-decoration: none;">+254 101665969</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="border-top: 1px solid var(--border-line); padding: 2.5rem 2rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; background-color: var(--bg-canvas);">
+        <p style="margin: 0;">&copy; 2026 {{.Name}} &bull; Systems Architect & QA Blueprint. Built with Go.</p>
+    </footer>
+
+    <script src="/static/js/portfolio.js"></script>
+</body>
+</html>
