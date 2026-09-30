@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os" // Added to read environment variables
 	deliveryHTTP "profile-portfolio/internal/delivery/http"
 )
 
@@ -16,8 +17,17 @@ func main() {
 	// Single unified delivery route root anchor
 	mux.HandleFunc("/", deliveryHTTP.ServeHome())
 
-	log.Println("[RUNTIME] Portfolio server active. Access live canvas at http://localhost:9000")
-	if err := http.ListenAndServe(":9000", mux); err != nil {
+	// 1. Get the port from Render's environment, default to 9000 locally
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "9000"
+	}
+
+	// 2. Bind to "0.0.0.0" so Render can route public traffic to your app
+	address := "0.0.0.0:" + port
+
+	log.Printf("[RUNTIME] Portfolio server active. Listening on %s\n", address)
+	if err := http.ListenAndServe(address, mux); err != nil {
 		log.Fatalf("[CRITICAL] Server crashed: %v", err)
 	}
 }
