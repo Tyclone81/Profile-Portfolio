@@ -45,4 +45,71 @@ document.addEventListener("DOMContentLoaded", () => {
     // Run baseline diagnostics check loop upfront on immediate page boot
     handleHeaderScroll();
     handleScrollspy();
+
+    // 3. INTERACTIVE RESUME VIEWER MODAL
+    const resumeModal = document.getElementById("resume-modal");
+    const openResumeBtn = document.getElementById("open-resume-btn");
+    const closeResumeBtn = document.getElementById("modal-close-btn");
+    const printResumeBtn = document.getElementById("modal-print-btn");
+    const resumeIframe = document.getElementById("resume-iframe");
+
+    const openModal = (e) => {
+        if (e) e.preventDefault();
+        if (resumeModal) {
+            resumeModal.classList.add("open");
+            resumeModal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        }
+    };
+
+    const closeModal = () => {
+        if (resumeModal) {
+            resumeModal.classList.remove("open");
+            resumeModal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        }
+    };
+
+    if (openResumeBtn) {
+        openResumeBtn.addEventListener("click", openModal);
+    }
+
+    if (closeResumeBtn) {
+        closeResumeBtn.addEventListener("click", closeModal);
+    }
+
+    if (resumeModal) {
+        resumeModal.addEventListener("click", (e) => {
+            if (e.target === resumeModal) {
+                closeModal();
+            }
+        });
+    }
+
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && resumeModal && resumeModal.classList.contains("open")) {
+            closeModal();
+        }
+    });
+
+    if (printResumeBtn && resumeIframe) {
+        printResumeBtn.addEventListener("click", () => {
+            try {
+                if (resumeIframe.contentWindow) {
+                    resumeIframe.contentWindow.focus();
+                    resumeIframe.contentWindow.print();
+                    return;
+                }
+            } catch (err) {
+                console.warn("Direct iframe print failed, falling back to window:", err);
+            }
+            const printWindow = window.open(resumeIframe.src, "_blank");
+            if (printWindow) {
+                printWindow.addEventListener("load", () => {
+                    printWindow.focus();
+                    printWindow.print();
+                });
+            }
+        });
+    }
 });

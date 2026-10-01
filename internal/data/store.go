@@ -6,7 +6,7 @@ func GetAccountRegistry() models.SystemData {
 	return models.SystemData{
 		Name:       "Victor Ogero",
 		Title:      "Backend & Systems Architect",
-		Bio:        "Process-driven full stack developer bridging the gap between precision analytical control and robust backend systems engineering. Operating deep within the rigorous peer-to-peer 01-edu ecosystem to build high-performance, statically linked network software.",
+		Bio:        "Process-driven full stack developer and backend systems engineer operating deep within the rigorous peer-to-peer 01-edu ecosystem to build high-performance, statically linked network software.",
 		PhotoPath:  "/static/images/profile.jpg",
 		ResumePath: "/static/docs/resume.pdf",
 		Socials: []models.SocialLink{
@@ -17,12 +17,6 @@ func GetAccountRegistry() models.SystemData {
 		},
 		Skills: []string{
 			"Go Systems Core", "SQL Database Design", "Concurrency Primitives", "Multi-Stage Dockerization", "Vanilla JS UI Engineering",
-		},
-		ChemSkills: []string{
-			"QMS & SOP Mapping", "KEBS Regulatory Auditing", "PPE Safety Compliance", "Inventory Data Analysis", "Personnel Mobilization",
-		},
-		CheMania: []string{
-			"QMS & SOP Mapping", "KEBS Regulatory Auditing", "PPE Safety Compliance", "Inventory Data Analysis", "Personnel Mobilization",
 		},
 		Hobbies: []string{
 			"System Architecture", "Open Source", "Low-Level Systems", "Technical Writing",
@@ -35,23 +29,6 @@ func GetAccountRegistry() models.SystemData {
 				BulletPoints: []string{
 					"Collaborating inside a rigorous peer learning matrix to design and deploy optimized web services.",
 					"Unpacking how low-level systems function under the hood using Go as the primary systems language.",
-				},
-			},
-			{
-				Role:     "Quality Control Analyst",
-				Company:  "Biscept Limited",
-				Timeline: "Oct 2022 – Nov 2023",
-				BulletPoints: []string{
-					"Executed raw material conformity parsing and physical-chemical fluid analysis using precision metrics.",
-					"Inspected incoming packaging integrity and directed laboratory shift logistics for 12 personnel.",
-				},
-			},
-			{
-				Role:     "Laboratory Technologist",
-				Company:  "Kisii National Polytechnic",
-				Timeline: "Jul 2022 – Sep 2022",
-				BulletPoints: []string{
-					"Enforced strict laboratory safety rules and handled hazardous chemical disposal protocols safely.",
 				},
 			},
 		},

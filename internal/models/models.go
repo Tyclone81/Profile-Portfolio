@@ -35,8 +35,6 @@ type SystemData struct {
 	ResumePath  string
 	Socials     []SocialLink
 	Skills      []string
-	ChemSkills  []string
-	CheMania    []string
 	Hobbies     []string
 	WorkHistory []Experience
 	Projects    []Project

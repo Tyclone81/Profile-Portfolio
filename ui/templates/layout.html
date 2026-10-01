@@ -40,9 +40,7 @@
         .circular-frame { width: 360px; height: 360px; border-radius: 50%; overflow: hidden; border: 1px solid var(--border-line); }
         .circular-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        .matrix-layout { display: flex; gap: 3.5rem; }
-        .tech-architect-block { flex: 0 0 62%; }
-        .analytical-chem-block { flex: 0 0 38%; background-color: var(--bg-surface); border: 1px solid var(--border-line); padding: 2.5rem; border-radius: 14px; box-sizing: border-box; }
+        .tech-architect-block { max-width: 850px; width: 100%; }
         
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
         .project-card { background-color: var(--bg-surface); border: 1px solid var(--border-line); border-radius: 14px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
@@ -69,13 +67,113 @@
 
         @media (max-width: 900px) {
             .hero-container { flex-direction: column-reverse; text-align: center; }
-            .matrix-layout { flex-direction: column; }
-            .tech-architect-block, .analytical-chem-block { flex: 1 1 100%; }
+            .tech-architect-block { max-width: 100%; }
             .contact-grid { grid-template-columns: 1fr; }
             .card-grid { grid-template-columns: 1fr; }
             .brand-grid { flex-wrap: wrap; justify-content: center; }
             .social-strip { justify-content: center; }
             .hero-title { font-size: 2.8rem; }
+        }
+
+        /* Interactive Resume Viewer Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(4, 4, 6, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal-dialog {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-line);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 960px;
+            height: 90vh;
+            max-height: 920px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 204, 68, 0.15);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.4rem;
+            background-color: var(--bg-canvas);
+            border-bottom: 1px solid var(--border-line);
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .modal-title-wrap { display: flex; align-items: center; }
+        .modal-actions { display: flex; align-items: center; gap: 0.6rem; }
+        .modal-action-btn {
+            background-color: rgba(255, 255, 255, 0.04);
+            color: var(--text-pure);
+            border: 1px solid var(--border-line);
+            padding: 0.45rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .modal-action-btn:hover {
+            color: var(--glow-neon);
+            border-color: var(--glow-neon);
+            background-color: rgba(0, 204, 68, 0.08);
+            box-shadow: 0 0 10px var(--glow-shadow);
+        }
+        .modal-close-btn {
+            background: transparent;
+            border: 1px solid var(--border-line);
+            color: var(--text-muted);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 0.3rem;
+            line-height: 1;
+        }
+        .modal-close-btn:hover {
+            color: #ff5555;
+            border-color: #ff5555;
+        }
+        .modal-body {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            background-color: #0e0e12;
+            position: relative;
+        }
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .modal-backdrop { padding: 0.5rem; }
+            .modal-dialog { height: 96vh; }
+            .modal-header { padding: 0.75rem; }
+            .modal-action-btn { padding: 0.35rem 0.6rem; font-size: 0.78rem; }
         }
     </style>
 </head>
@@ -89,7 +187,7 @@
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
                 <a href="#contact">Let's Talk</a>
-                <a href="{{.ResumePath}}" download style="color: var(--glow-neon);">Resume</a>
+                <a href="#resume-modal" id="open-resume-btn" style="color: var(--glow-neon); cursor: pointer;">View Resume</a>
             </div>
         </nav>
     </header>
@@ -117,48 +215,28 @@
 
     <section id="about" class="viewport-section alternate-bg">
         <div class="section-wrapper">
-            <h2 class="section-heading"><span class="neon-dot">//</span> Professional Matrix Profile</h2>
-            <div class="matrix-layout">
+            <h2 class="section-heading">About</h2>
+            <div class="tech-architect-block">
+                <h3 style="margin-top: 0;">Software Engineering</h3>
+                <p style="color: var(--text-muted); line-height: 1.7;">Operating deep within Go networks inside the peer-to-peer 01-edu engineering matrix at Zone01 Kisumu. Focused on unpacking underlying low-level system designs, pointer security, memory boundaries, and CGO compilation loops.</p>
                 
-                <div class="tech-architect-block">
-                    <h3 style="margin-top: 0;">Software Engineering Core</h3>
-                    <p style="color: var(--text-muted);">Operating deep within Go networks inside the peer-to-peer 01-edu engineering matrix at Zone01 Kisumu. Focused on unpacking underlying low-level system designs, pointer security, memory boundaries, and CGO compilation loops.</p>
-                    
-                    {{range .WorkHistory}}{{if eq .Company "Zone01 Kisumu"}}
-                    <div style="border-left: 2px solid var(--border-line); padding-left: 1.5rem; margin-top: 2rem;">
-                        <span style="color: var(--glow-neon); font-size: 0.8rem; font-weight: bold;">{{.Timeline}}</span>
-                        <h4 style="margin: 0.5rem 0;">{{.Role}} • <span style="color: var(--text-muted);">{{.Company}}</span></h4>
-                        <ul>{{range .BulletPoints}}<li>{{.}}</li>{{end}}</ul>
-                    </div>
-                    {{end}}{{end}}
-
-                    <h4 style="margin-top: 2.5rem; margin-bottom: 0.5rem;">Digital Capabilities Stack</h4>
-                    {{range .Skills}}<span class="tech-tag" style="color: #fff;">{{.}}</span>{{end}}
+                {{range .WorkHistory}}
+                <div style="border-left: 2px solid var(--border-line); padding-left: 1.5rem; margin-top: 2rem;">
+                    <span style="color: var(--glow-neon); font-size: 0.8rem; font-weight: bold;">{{.Timeline}}</span>
+                    <h4 style="margin: 0.5rem 0;">{{.Role}} • <span style="color: var(--text-muted);">{{.Company}}</span></h4>
+                    <ul>{{range .BulletPoints}}<li>{{.}}</li>{{end}}</ul>
                 </div>
+                {{end}}
 
-                <div class="analytical-chem-block">
-                    <h3 style="margin-top: 0; color: var(--glow-neon);">Analytical Chemistry & QA</h3>
-                    <p style="font-size: 0.9rem;">Process-driven BSc holder specialized in Quality Management Systems (QMS), raw input verification, and mapping rigid regulatory compliance controls (KEBS/SOPs) straight into systems automation blueprints.</p>
-                    
-                    {{range .WorkHistory}}{{if ne .Company "Zone01 Kisumu"}}
-                    <div style="margin-top: 1.5rem; border-bottom: 1px solid var(--border-line); padding-bottom: 1rem;">
-                        <span style="font-size: 0.75rem; color: var(--text-muted);">{{.Timeline}}</span>
-                        <h4 style="margin: 0.25rem 0; font-size: 0.95rem;">{{.Role}}</h4>
-                        <span style="font-size: 0.85rem; color: #fff;">{{.Company}}</span>
-                    </div>
-                    {{end}}{{end}}
-
-                    <h4 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 0.9rem;">Operations Skills</h4>
-                    {{range .ChemSkills}}<span class="tech-tag" style="font-size: 0.75rem;">{{.}}</span>{{end}}
-                </div>
-
+                <h4 style="margin-top: 2.5rem; margin-bottom: 0.5rem;">Technical Skills</h4>
+                {{range .Skills}}<span class="tech-tag" style="color: #fff;">{{.}}</span>{{end}}
             </div>
         </div>
     </section>
 
     <section id="projects" class="viewport-section">
         <div class="section-wrapper">
-            <h2 class="section-heading"><span class="neon-dot">//</span> Recent Blueprints</h2>
+            <h2 class="section-heading">Projects</h2>
             <div class="card-grid">
                 {{range .Projects}}
                 <div class="project-card">
@@ -178,7 +256,7 @@
             </div>
 
             <div style="margin-top: 5rem;">
-                <h3 class="section-heading" style="font-size: 2rem; margin-bottom: 2.5rem;"><span class="neon-dot">//</span> Technical Writings</h3>
+                <h3 class="section-heading" style="font-size: 2rem; margin-bottom: 2.5rem;">Articles</h3>
                 <div class="card-grid">
                     {{range .Articles}}
                     <div class="project-card">
@@ -199,9 +277,9 @@
 
     <section id="contact" class="viewport-section alternate-bg">
         <div class="section-wrapper">
-            <h2 class="section-heading"><span class="neon-dot">//</span> Connect Matrix Terminal</h2>
+            <h2 class="section-heading">Contact</h2>
             <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 750px; margin-bottom: 3.5rem;">
-                Have an architecture project, an open-source collaboration, or an operational blueprint that demands rigorous quality assurance? Let's talk.
+                Have an architecture project, an open-source collaboration, or a backend system to build? Let's talk.
             </p>
             <div class="contact-grid">
                 <div class="contact-channel-card">
@@ -227,8 +305,38 @@
     </section>
 
     <footer style="border-top: 1px solid var(--border-line); padding: 2.5rem 2rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; background-color: var(--bg-canvas);">
-        <p style="margin: 0;">&copy; 2026 {{.Name}} &bull; Systems Architect & QA Blueprint. Built with Go.</p>
+        <p style="margin: 0;">&copy; 2026 {{.Name}} &bull; Backend & Systems Architect. Built with Go.</p>
     </footer>
+
+    <!-- Interactive Resume Viewer Modal -->
+    <div id="resume-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resume-modal-title">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="type-badge" style="margin-right: 0.6rem;">Curriculum Vitae</span>
+                    <h3 id="resume-modal-title" style="margin: 0; font-size: 1.05rem; display: inline-block;">Resume Preview</h3>
+                </div>
+                <div class="modal-actions">
+                    <a href="{{.ResumePath}}" download="Victor_Ogero_Resume.pdf" class="modal-action-btn" title="Download Resume">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download
+                    </a>
+                    <button type="button" id="modal-print-btn" class="modal-action-btn" title="Print Resume">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        Print
+                    </button>
+                    <a href="{{.ResumePath}}" target="_blank" rel="noopener noreferrer" class="modal-action-btn" title="Open in New Tab">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        Open in Tab
+                    </a>
+                    <button type="button" id="modal-close-btn" class="modal-close-btn" aria-label="Close Resume Preview">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <iframe id="resume-iframe" src="{{.ResumePath}}" title="Resume Preview"></iframe>
+            </div>
+        </div>
+    </div>
 
     <script src="/static/js/portfolio.js"></script>
 </body>
