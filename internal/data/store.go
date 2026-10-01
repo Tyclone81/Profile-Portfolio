@@ -23,22 +23,18 @@ func GetAccountRegistry() models.SystemData {
 		},
 		WorkHistory: []models.Experience{
 			{
-				Role:     "Software Engineer",
-				Company:  "Zone01 Kisumu",
-				Timeline: "Jun 2026 – Present",
-				BulletPoints: []string{
-					"Collaborating inside a rigorous peer learning matrix to design and deploy optimized web services.",
-					"Unpacking how low-level systems function under the hood using Go as the primary systems language.",
-				},
+				Role:    "Software Engineer",
+				Company: "Zone01 Kisumu",
+				Summary: "Immersed in an intensive, peer-led software engineering collective focused on building robust, high-performance systems from first principles. Operating deep within Go to architect concurrent network protocols, optimize algorithmic data structures, and engineer statically compiled backend services through continuous peer code reviews and evaluation loops.",
 			},
 		},
 		Projects: []models.Project{
 			{
-				Title:        "Zone01 Advanced Web Forum Engine",
-				Description:  "An internal, statically compiled Go network platform engineered to meet rigid 01-edu evaluation specs. Features strict CGO SQLite tracking abstractions, single-active-session multi-browser constraints, and thread-safe upvote/downvote interaction engines.",
+				Title:        "Zone01 Systems & Core Engineering Suite",
+				Description:  "A comprehensive portfolio of systems-level Go software engineered within the intensive peer-to-peer 01-edu matrix. Encompasses concurrent TCP socket multiplexing (net-cat), algorithmic stack sorting optimization (push-swap), relational forum engines with SQLite CGO and session security (forum), and containerized RESTful API integration platforms.",
 				Type:         "Internal",
-				Technologies: []string{"Go", "SQLite", "Docker", "Vanilla JS"},
-				SourceURL:    "https://github.com/Tyclone81",
+				Technologies: []string{"Go Systems", "Concurrent TCP Sockets", "Algorithms", "SQLite", "Docker"},
+				SourceURL:    "https://github.com/Tyclone81?tab=repositories",
 			},
 			{
 				Title:        "INKA LittUp Platform",

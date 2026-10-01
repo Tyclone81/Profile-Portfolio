@@ -315,13 +315,12 @@
             <h2 class="section-heading">About</h2>
             <div class="tech-architect-block">
                 <h3 style="margin-top: 0;">Software Engineering</h3>
-                <p style="color: var(--text-muted); line-height: 1.7;">Operating deep within Go networks inside the peer-to-peer 01-edu engineering matrix at Zone01 Kisumu. Focused on unpacking underlying low-level system designs, pointer security, memory boundaries, and CGO compilation loops.</p>
+                <p style="color: var(--text-muted); line-height: 1.7;">Focused on low-level systems architectures, memory management, concurrency primitives, and robust backend engineering. Driven by first-principles software design and statically linked network systems.</p>
                 
                 {{range .WorkHistory}}
                 <div style="border-left: 2px solid var(--border-line); padding-left: 1.5rem; margin-top: 2rem;">
-                    <span style="color: var(--glow-neon); font-size: 0.8rem; font-weight: bold;">{{.Timeline}}</span>
-                    <h4 style="margin: 0.5rem 0;">{{.Role}} • <span style="color: var(--text-muted);">{{.Company}}</span></h4>
-                    <ul>{{range .BulletPoints}}<li>{{.}}</li>{{end}}</ul>
+                    <h4 style="margin: 0; font-size: 1.15rem;">{{.Role}} • <span style="color: var(--text-muted);">{{.Company}}</span></h4>
+                    <p style="color: var(--text-muted); line-height: 1.7; margin: 0.75rem 0 0 0;">{{.Summary}}</p>
                 </div>
                 {{end}}
 

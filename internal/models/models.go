@@ -24,6 +24,7 @@ type Experience struct {
 	Role         string
 	Company      string
 	Timeline     string
+	Summary      string
 	BulletPoints []string
 }
 
