@@ -118,67 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const articleCloseBtn = document.getElementById("article-close-btn");
     const articleCopyBtn = document.getElementById("article-copy-btn");
     const copyBtnText = document.getElementById("copy-btn-text");
-    const articleModalBody = document.getElementById("article-modal-body");
     const articleExternalLink = document.getElementById("article-external-link");
     const viewArticleBtns = document.querySelectorAll(".view-article-btn");
-
-    let cachedArticle = null;
-    const articleApiUrl = "https://dev.to/api/articles/tyclone81/the-thin-line-between-vibe-coding-and-viable-coding-1mal";
-
-    const renderArticle = (data) => {
-        if (!articleModalBody) return;
-        const tagsHtml = (data.tag_list || []).map(tag => `<span class="tech-tag">#${tag}</span>`).join("");
-        articleModalBody.innerHTML = `
-            <div class="article-meta-header">
-                <h1>${data.title}</h1>
-                <div style="color: var(--text-muted); font-size: 0.9rem;">
-                    <span>By ${data.user?.name || "Victor Ogero"}</span> &bull; 
-                    <span>${data.reading_time_minutes || 3} min read</span> &bull; 
-                    <span>${data.readable_publish_date || "Sep 9"}</span>
-                </div>
-                ${tagsHtml ? `<div class="article-meta-tags">${tagsHtml}</div>` : ""}
-            </div>
-            <div class="article-content">
-                ${data.body_html}
-            </div>
-        `;
-    };
-
-    const fetchArticleContent = async () => {
-        if (cachedArticle) {
-            renderArticle(cachedArticle);
-            return;
-        }
-        try {
-            const res = await fetch(articleApiUrl);
-            if (!res.ok) throw new Error("Network response was not ok");
-            const data = await res.json();
-            cachedArticle = data;
-            renderArticle(data);
-        } catch (err) {
-            console.error("Failed to load article from dev.to:", err);
-            if (articleModalBody) {
-                const targetUrl = articleExternalLink ? articleExternalLink.href : "https://dev.to/tyclone81/the-thin-line-between-vibe-coding-and-viable-coding-1mal";
-                articleModalBody.innerHTML = `
-                    <div class="article-loading-state">
-                        <h3 style="color: var(--text-pure); margin-bottom: 0.5rem;">Could not load reader view</h3>
-                        <p style="color: var(--text-muted); max-width: 450px; margin-bottom: 1.5rem;">The article is available directly on dev.to.</p>
-                        <a href="${targetUrl}" target="_blank" rel="noopener noreferrer" class="glow-cta-btn" style="padding: 0.75rem 1.8rem; font-size: 0.9rem;">Read on dev.to &rarr;</a>
-                    </div>
-                `;
-            }
-        }
-    };
-
-    // Pre-fetch article data in background so it opens instantly
-    setTimeout(async () => {
-        try {
-            const res = await fetch(articleApiUrl);
-            if (res.ok) cachedArticle = await res.json();
-        } catch (e) {
-            // Silently ignore background prefetch errors
-        }
-    }, 1200);
 
     const openArticleModal = (e) => {
         if (e) e.preventDefault();
@@ -186,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
             articleModal.classList.add("open");
             articleModal.setAttribute("aria-hidden", "false");
             document.body.style.overflow = "hidden";
-            fetchArticleContent();
         }
     };
 
