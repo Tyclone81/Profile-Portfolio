@@ -6,10 +6,10 @@
     --border-subtle: #16161a;
     
     /* 🟢 SIGNATURE HIGH-NEON RADAR VALUES */
-    --glow-neon: #00cc44;
-    --glow-neon-bright: #00ff55;
-    --glow-shadow: rgba(0, 204, 68, 0.35);
-    --glow-shadow-intense: rgba(0, 255, 85, 0.65);
+    --glow-neon: #80c496;
+    --glow-neon-bright: #73eb9b;
+    --glow-shadow: #83ce9ccc;
+    --glow-shadow-intense: #99f0b6a6;
 }
 
 /* 🏎️ THE CRITICAL SLOW-MO VOLUNTARY MOVEMENT CONTROLLER */
