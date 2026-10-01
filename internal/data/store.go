@@ -52,7 +52,7 @@ func GetAccountRegistry() models.SystemData {
 			{
 				Title:    "The Thin Line Between Vibe Coding and Viable Coding",
 				Platform: "dev.to",
-				URL:      "https://dev.to/tyclone81",
+				URL:      "https://dev.to/tyclone81/the-thin-line-between-vibe-coding-and-viable-coding-1mal",
 				Date:     "Sep 2026",
 			},
 		},

@@ -172,11 +172,105 @@
             border: none;
             display: block;
         }
+        .article-modal-dialog {
+            max-width: 840px;
+        }
+        .article-reader-body {
+            overflow-y: auto;
+            padding: 2.2rem 2.5rem;
+            color: #d1d1d8;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            background-color: var(--bg-surface);
+            box-sizing: border-box;
+        }
+        .article-reader-body h1, .article-reader-body h2, .article-reader-body h3 {
+            color: var(--text-pure);
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+        .article-reader-body p {
+            margin-bottom: 1.4rem;
+            color: #d6d6de;
+        }
+        .article-reader-body strong {
+            color: var(--text-pure);
+        }
+        .article-reader-body a {
+            color: var(--glow-neon);
+            text-decoration: underline;
+        }
+        .article-reader-body a:hover {
+            color: var(--glow-neon-bright);
+        }
+        .article-reader-body code {
+            background-color: rgba(255, 255, 255, 0.06);
+            padding: 0.2rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--glow-neon);
+        }
+        .article-reader-body pre {
+            background-color: #060608;
+            border: 1px solid var(--border-line);
+            padding: 1.2rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        .article-reader-body blockquote {
+            border-left: 3px solid var(--glow-neon);
+            margin: 1.5rem 0;
+            padding-left: 1.2rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .article-meta-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+        .article-meta-header h1 {
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            line-height: 1.25;
+            color: var(--text-pure);
+        }
+        .article-meta-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .article-loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 320px;
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(112, 202, 142, 0.2);
+            border-top-color: var(--glow-neon);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
         @media (max-width: 600px) {
             .modal-backdrop { padding: 0.5rem; }
             .modal-dialog { height: 96vh; }
             .modal-header { padding: 0.75rem; }
             .modal-action-btn { padding: 0.35rem 0.6rem; font-size: 0.78rem; }
+            .article-reader-body { padding: 1.5rem 1rem; }
+            .article-meta-header h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -269,7 +363,7 @@
                             <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Published live on the web &bull; {{.Date}}</p>
                         </div>
                         <div>
-                            <a href="{{.URL}}" target="_blank" rel="noopener noreferrer" style="color: var(--glow-neon); text-decoration: none; font-weight: 600; font-size: 0.95rem;">Read Full Publication &rarr;</a>
+                            <a href="{{.URL}}" class="view-article-btn" data-url="{{.URL}}" data-title="{{.Title}}" target="_blank" rel="noopener noreferrer" style="color: var(--glow-neon); text-decoration: none; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem;">View Article &rarr;</a>
                         </div>
                     </div>
                     {{end}}
@@ -337,6 +431,35 @@
             </div>
             <div class="modal-body">
                 <iframe id="resume-iframe" src="{{.ResumePath}}" title="Resume Preview"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Article Reader Modal -->
+    <div id="article-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="article-modal-title">
+        <div class="modal-dialog article-modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="type-badge" style="margin-right: 0.6rem;">dev.to Publication</span>
+                    <h3 id="article-modal-title" style="margin: 0; font-size: 1.05rem; display: inline-block;">Article Preview</h3>
+                </div>
+                <div class="modal-actions">
+                    <a id="article-external-link" href="https://dev.to/tyclone81/the-thin-line-between-vibe-coding-and-viable-coding-1mal" target="_blank" rel="noopener noreferrer" class="modal-action-btn" title="Open on dev.to">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        Open on dev.to
+                    </a>
+                    <button type="button" id="article-copy-btn" class="modal-action-btn" title="Copy Article Link">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 5px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span id="copy-btn-text">Copy Link</span>
+                    </button>
+                    <button type="button" id="article-close-btn" class="modal-close-btn" aria-label="Close Article Preview">&times;</button>
+                </div>
+            </div>
+            <div id="article-modal-body" class="modal-body article-reader-body">
+                <div class="article-loading-state">
+                    <div class="spinner"></div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 1rem;">Loading article from dev.to...</p>
+                </div>
             </div>
         </div>
     </div>
