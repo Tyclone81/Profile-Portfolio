@@ -8,8 +8,11 @@
         :root {
             --bg-canvas: #040406; --bg-surface: #0b0b0e; --border-line: #14141a;
             --text-pure: #ffffff; --text-muted: #747480;
-            --glow-neon: #00cc44; --glow-neon-bright: #00ff55;
-            --glow-shadow: rgba(0, 204, 68, 0.3);
+            --glow-neon: #70ca8e;
+            --green: #70ca8e;
+            --glow-neon-bright: #88d7a2;
+            --glow-shadow: rgba(112, 202, 142, 0.18);
+            --glow-shadow-intense: rgba(112, 202, 142, 0.32);
         }
         html { scroll-behavior: smooth; scroll-padding-top: 90px; }
         body { background-color: var(--bg-canvas); color: var(--text-pure); font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
@@ -35,8 +38,8 @@
         .social-link-item { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; border: 1px solid var(--border-line); padding: 0.4rem 0.8rem; border-radius: 6px; }
         .social-link-item:hover { color: var(--glow-neon); border-color: var(--glow-neon); text-shadow: 0 0 8px var(--glow-shadow); }
         
-        .glow-cta-btn { display: inline-block; background-color: var(--glow-neon); color: var(--bg-canvas); text-decoration: none; padding: 1.1rem 2.5rem; border-radius: 8px; font-weight: 700; box-shadow: 0 0 25px var(--glow-shadow); transition: all 0.25s ease; }
-        .glow-cta-btn:hover { background-color: var(--glow-neon-bright); box-shadow: 0 0 35px var(--glow-neon-bright); transform: translateY(-2px); }
+        .glow-cta-btn { display: inline-block; background-color: var(--glow-neon); color: var(--bg-canvas); text-decoration: none; padding: 1.1rem 2.5rem; border-radius: 8px; font-weight: 700; box-shadow: 0 0 16px var(--glow-shadow); transition: all 0.25s ease; }
+        .glow-cta-btn:hover { background-color: var(--glow-neon-bright); box-shadow: 0 0 22px var(--glow-shadow-intense); transform: translateY(-2px); }
         .circular-frame { width: 360px; height: 360px; border-radius: 50%; overflow: hidden; border: 1px solid var(--border-line); }
         .circular-frame img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -101,7 +104,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 204, 68, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 25px rgba(112, 202, 142, 0.1);
         }
         .modal-header {
             display: flex;
@@ -133,8 +136,8 @@
         .modal-action-btn:hover {
             color: var(--glow-neon);
             border-color: var(--glow-neon);
-            background-color: rgba(0, 204, 68, 0.08);
-            box-shadow: 0 0 10px var(--glow-shadow);
+            background-color: rgba(112, 202, 142, 0.08);
+            box-shadow: 0 0 8px var(--glow-shadow);
         }
         .modal-close-btn {
             background: transparent;

@@ -5,11 +5,12 @@
     --text-muted: #7a7a85;
     --border-subtle: #16161a;
     
-    /* 🟢 SIGNATURE HIGH-NEON RADAR VALUES */
-    --glow-neon: #80c496;
-    --glow-neon-bright: #73eb9b;
-    --glow-shadow: #83ce9ccc;
-    --glow-shadow-intense: #99f0b6a6;
+    /* 🟢 SIGNATURE SUBTLE ACCENT VALUES */
+    --glow-neon: #70ca8e;
+    --green: #70ca8e;
+    --glow-neon-bright: #88d7a2;
+    --glow-shadow: rgba(112, 202, 142, 0.18);
+    --glow-shadow-intense: rgba(112, 202, 142, 0.32);
 }
 
 /* 🏎️ THE CRITICAL SLOW-MO VOLUNTARY MOVEMENT CONTROLLER */
@@ -120,13 +121,13 @@ body {
     border-radius: 8px;
     font-weight: 700;
     font-size: 1rem;
-    box-shadow: 0 0 25px var(--glow-shadow);
+    box-shadow: 0 0 16px var(--glow-shadow);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glow-cta-btn:hover {
     background-color: var(--glow-neon-bright);
-    box-shadow: 0 0 40px var(--glow-shadow-intense);
+    box-shadow: 0 0 22px var(--glow-shadow-intense);
     transform: translateY(-3px);
 }
 
